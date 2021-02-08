@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `Account` bigint(20) NOT NULL COMMENT 'Key to: account',
   `Name` varchar(255) DEFAULT NULL COMMENT 'Display name.',
   `Passwd` varchar(255) DEFAULT NULL COMMENT 'Hashed password.',
+  `PasswdExpired` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Flag for expired password.',
   `Email` varchar(255) DEFAULT NULL COMMENT 'Email address.',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='SSTM Users.';
