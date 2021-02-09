@@ -1,6 +1,8 @@
 <?php  
 header("Content-type: image/png");
-$im = @imagecreatetruecolor(35,35);
+$imh = 35;
+$imw = 35;
+$im = @imagecreatetruecolor($imh, $imw);
 
 # Initiate Colors
 $colors = Array();
@@ -50,9 +52,13 @@ imagefill($im, 0, 0, $back);
 $text = imagecolorallocate($im, $font_r, $font_g, $font_b);
 
 # Text
+$size = 5;
+$literal = "A";
 $font = "arial.ttf";
-//imagettftext($im, 18, 0, 9, 33, $text, $font, "A");
-imagestring($im, 7, 0, 0, "A", $text);
+$len = strlen($literal);
+$top = ($imh/2)-(imagefontheight($size)*$len)*(1/(1+$len));
+$lft = ($imw/2)-(imagefontwidth($size)*$len)*(1/(1+$len));
+imagestring($im, $size, $lft, $top, $literal, $text);
 
 # Output image
 imagepng($im);
