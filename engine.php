@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 # Read configs
-$loginConfig = parse_ini_file('.login.config', TRUE);
+$loginConfig = parse_ini_file('php/.login.config', TRUE);
 
 # Check if there is any enabled options
 $loginOptions = false;

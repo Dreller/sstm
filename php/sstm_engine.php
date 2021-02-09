@@ -4,16 +4,14 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-include_once('sstm_db.inc');
+include_once("../php/sstm_db.inc");
 
 $json = Array();
 
 # GET  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 if( isset($_GET['method']) && $_GET['method'] != '' ){
+
     
-
-
-
 }
 
 # POST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -27,6 +25,17 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
         $json = [];
         goto OutputJSON;
     }
+    # Add a new Suite
+    if( $method == 'suite-new'){
+        $newData = Array(
+            'Account'   => $_SESSION['Account'],
+            'Name'      => $input['Name']
+        );
+        $json['newID'] = $db->insert('suite', $newData);
+        goto OutputJSON;
+    }
+    
+
 }
 
 

@@ -2,7 +2,11 @@
 require_once("mysqliDb.php");
 
 # Read configs
-$loginConfig = parse_ini_file('.login.config', TRUE);
+$path = "php/.login.config";
+if( !file_exists($path) ){
+    $path = ".login.config";
+}
+$loginConfig = parse_ini_file($path, TRUE);
 
 $dbHost = $loginConfig["Database"]["Host"];
 $dbUser = $loginConfig["Database"]["User"];
