@@ -73,11 +73,17 @@ $suite = $db->getOne('suite');
 
 <script>
 
-$(document).ready(function(){
+function updateAll(){
     $("#appLoader").addClass("active");
     $("#envLoader").addClass("active");
     $("#verLoader").addClass("active");
+    updateApps();
+    updateVersions();
+    updateEnvironments();
+}
 
+function updateApps(){
+    $("#appLoader").addClass("active");
     $.get("php/sstm_engine.php?method=apps-get&suite=<?php echo $ID; ?>", function(data){
         $("#appTableBody tr").remove();
         var msg = JSON.parse(data['message']);
@@ -89,19 +95,10 @@ $(document).ready(function(){
         }
         $("#appLoader").removeClass("active");
     });
+}
 
-    $.get("php/sstm_engine.php?method=envs-get&suite=<?php echo $ID; ?>", function(data){
-        $("#envTableBody tr").remove();
-        var msg = JSON.parse(data['message']);
-        for(var m in msg){
-            // Add line
-            var envName = msg[m]['Name'];
-            var newLine = "<tr><th class='left aligned'>" + envName + "</td></tr>";
-            $("#envTableBody").append(newLine);
-        }
-        $("#envLoader").removeClass("active");
-    });
-
+function updateVersions(){
+    $("#verLoader").addClass("active");
     $.get("php/sstm_engine.php?method=vers-get&suite=<?php echo $ID; ?>", function(data){
         $("#verTableBody tr").remove();
         var msg = JSON.parse(data['message']);
@@ -113,10 +110,25 @@ $(document).ready(function(){
         }
         $("#verLoader").removeClass("active");
     });
+}
 
+function updateEnvironments(){
+    $("#envLoader").addClass("active");
+    $.get("php/sstm_engine.php?method=envs-get&suite=<?php echo $ID; ?>", function(data){
+        $("#envTableBody tr").remove();
+        var msg = JSON.parse(data['message']);
+        for(var m in msg){
+            // Add line
+            var envName = msg[m]['Name'];
+            var newLine = "<tr><th class='left aligned'>" + envName + "</td></tr>";
+            $("#envTableBody").append(newLine);
+        }
+        $("#envLoader").removeClass("active");
+    });
+}
 
-
-
+$(document).ready(function(){
+    updateAll();
 });
 
 
