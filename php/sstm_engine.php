@@ -15,9 +15,11 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
     $json['message'] = "Unknown GET method: $method";
     
     if( $method == 'apps-get' ){
-        $db->where('Suite', $_GET['suite']);
-        $db->orderBy('Name', 'asc');
-        $apps = $db->get('application');
+        $db->where('a.Suite', $_GET['suite']);
+        $db->join('package p', 'a.Package = p.ID', 'LEFT');
+        $db->orderBy('p.Name', 'asc');
+        $db->orderBy('a.Name', 'asc');
+        $apps = $db->get('application a');
         $temp = Array();
         foreach($apps as $app){
             $temp[] = $app;

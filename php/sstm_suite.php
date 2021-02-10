@@ -27,11 +27,8 @@ $suite = $db->getOne('suite');
         <div id="applications" class="ui segment">
             <h2 class="ui dividing header">Applications</h2>
             <div id="appLoader" class="ui loader"></div>
-            <table id="appTable" class="ui right aligned table">
+            <table id="appTable" class="ui celled table">
                 <thead id="appTableHead">
-                    <tr>
-                        <th class="left aligned">Name</th>
-                    </tr>
                 </thead>
                 <tbody id="appTableBody">
                 </tbody>
@@ -42,11 +39,8 @@ $suite = $db->getOne('suite');
         <div id="environments" class="ui segment">
             <h2 class="ui dividing header">Environments</h2>
             <div id="envLoader" class="ui loader"></div>
-            <table id="envTable" class="ui right aligned table">
+            <table id="envTable" class="ui celled table">
                 <thead id="envTableHead">
-                    <tr>
-                        <th class="left aligned">Name</th>
-                    </tr>
                 </thead>
                 <tbody id="envTableBody">
                 </tbody>
@@ -55,11 +49,8 @@ $suite = $db->getOne('suite');
         <div id="versions" class="ui segment">
             <h2 class="ui dividing header">Versions</h2>
             <div id="verLoader" class="ui loader"></div>
-            <table id="verTable" class="ui right aligned table">
+            <table id="verTable" class="ui celled table">
                 <thead id="verTableHead">
-                    <tr>
-                        <th class="left aligned">Name</th>
-                    </tr>
                 </thead>
                 <tbody id="verTableBody">
                 </tbody>
@@ -67,8 +58,6 @@ $suite = $db->getOne('suite');
         </div>
     </div>
 </div>
-
-
 
 
 <script>
@@ -90,7 +79,7 @@ function updateApps(){
         for(var m in msg){
             // Add line
             var appName = msg[m]['Name'];
-            var newLine = "<tr><th class='left aligned'>" + appName + "</td></tr>";
+            var newLine = "<tr><td>" + appName + "</td></tr>";
             $("#appTableBody").append(newLine);
         }
         $("#appLoader").removeClass("active");
@@ -105,7 +94,7 @@ function updateVersions(){
         for(var m in msg){
             // Add line
             var verName = msg[m]['Name'];
-            var newLine = "<tr><th class='left aligned'>" + verName + "</td></tr>";
+            var newLine = "<tr><td>" + verName + "</td></tr>";
             $("#verTableBody").append(newLine);
         }
         $("#verLoader").removeClass("active");
@@ -120,7 +109,7 @@ function updateEnvironments(){
         for(var m in msg){
             // Add line
             var envName = msg[m]['Name'];
-            var newLine = "<tr><th class='left aligned'>" + envName + "</td></tr>";
+            var newLine = "<tr><td>" + envName + "</td></tr>";
             $("#envTableBody").append(newLine);
         }
         $("#envLoader").removeClass("active");
