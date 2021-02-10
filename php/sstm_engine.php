@@ -7,11 +7,28 @@ session_start();
 include_once("../php/sstm_db.inc");
 
 $json = Array();
+$json['status'] = 'oops';
 
 # GET  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 if( isset($_GET['method']) && $_GET['method'] != '' ){
-
+    $method = $_GET['method'];
+    $json['message'] = "Unknown GET method: $method";
     
+    if( $method == 'apps-get' ){
+        $db->where('Suite', $_GET['suite']);
+        $db->orderBy('Name', 'asc');
+        $apps = $db->get('application');
+        $temp = Array();
+        foreach($apps as $app){
+            $temp[] = $app;
+        }
+
+        $json['status'] = 'ok';
+        $json['count'] = count($apps);
+        $json['message'] = json_encode($temp);
+        goto OutputJSON;
+    }
+
 }
 
 # POST - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -20,6 +37,8 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
     $raw = file_get_contents("php://input");
     $input = json_decode($raw, true);
     $method = $input["method"];
+
+    $json['message'] = "Unknown POST method: $method";
 
     if( $method == 'auth' ){
         $json = [];
