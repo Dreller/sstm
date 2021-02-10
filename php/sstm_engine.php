@@ -28,6 +28,34 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         $json['message'] = json_encode($temp);
         goto OutputJSON;
     }
+    if( $method == 'envs-get' ){
+        $db->where('Suite', $_GET['suite']);
+        $db->orderBy('Name', 'asc');
+        $envs = $db->get('environment');
+        $temp = Array();
+        foreach($envs as $env){
+            $temp[] = $env;
+        }
+
+        $json['status'] = 'ok';
+        $json['count'] = count($envs);
+        $json['message'] = json_encode($temp);
+        goto OutputJSON;
+    }
+    if( $method == 'vers-get' ){
+        $db->where('Suite', $_GET['suite']);
+        $db->orderBy('Name', 'asc');
+        $vers = $db->get('version');
+        $temp = Array();
+        foreach($vers as $ver){
+            $temp[] = $ver;
+        }
+
+        $json['status'] = 'ok';
+        $json['count'] = count($vers);
+        $json['message'] = json_encode($temp);
+        goto OutputJSON;
+    }
 
 }
 
