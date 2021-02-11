@@ -3,13 +3,13 @@ session_start();
 include_once('sstm_db.inc');
 
 # Get Users's Account's Suites.
-$db->where('Account', $_SESSION['Account']);
-$db->orderBy('Name', 'asc');
+$db->where('suiteAccount', $_SESSION['userAccount']);
+$db->orderBy('suiteName', 'asc');
 $suites = $db->get('suite');
 
 $suiteList = '';
 foreach($suites as $suite){
-    $suiteList .= '<a class="item" href="#" onclick="loadScreen(\'sstm_suite.php?id='.$suite['ID'].'\')">'.$suite['Name'].'</a>';
+    $suiteList .= '<a class="item" href="#" onclick="loadScreen(\'sstm_suite.php?id='.$suite['suiteID'].'\')">'.$suite['suiteName'].'</a>';
 }
 
 

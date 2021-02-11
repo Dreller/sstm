@@ -5,87 +5,95 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 CREATE TABLE IF NOT EXISTS `account` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Name` varchar(255) DEFAULT NULL COMMENT 'Display name.',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `accID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `accName` varchar(255) DEFAULT NULL COMMENT 'Display name.',
+  PRIMARY KEY (`accID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `application` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Suite` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: suite',
-  `Name` varchar(255) NOT NULL COMMENT 'Display Name',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Applications contained in each suite.';
+  `appID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `appSuite` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: suite',
+  `appPackage` bigint(20) NOT NULL COMMENT 'Key to: package',
+  `appName` varchar(255) NOT NULL COMMENT 'Display Name',
+  PRIMARY KEY (`appID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Applications contained in each suite.';
 
 CREATE TABLE IF NOT EXISTS `environment` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Suite` bigint(20) DEFAULT NULL COMMENT 'Key to: suite',
-  `Name` varchar(50) DEFAULT NULL COMMENT 'Display name.',
-  `Order` tinyint(4) DEFAULT '0' COMMENT 'Key to sort environments in logical order.',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Environments for each suites.';
+  `envID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `envSuite` bigint(20) DEFAULT NULL COMMENT 'Key to: suite',
+  `envName` varchar(50) DEFAULT NULL COMMENT 'Display name.',
+  `envOrder` tinyint(4) DEFAULT '0' COMMENT 'Key to sort environments in logical order.',
+  PRIMARY KEY (`envID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Environments for each suites.';
 
 CREATE TABLE IF NOT EXISTS `function` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Application` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: application',
-  `Name` varchar(255) NOT NULL COMMENT 'Display Name',
-  PRIMARY KEY (`ID`)
+  `fctID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `fctApplication` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: application',
+  `fctName` varchar(255) NOT NULL COMMENT 'Display Name',
+  PRIMARY KEY (`fctID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Functions for each application.';
 
 CREATE TABLE IF NOT EXISTS `meta` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Key` varchar(50) NOT NULL COMMENT 'Internal qualifier.',
-  `ParentLevel` varchar(255) DEFAULT NULL COMMENT 'Table name of the parent item.',
-  `ParentID` bigint(20) DEFAULT NULL COMMENT 'ID of the parent in the table (from ParentLevel).',
-  `StatNumeric` double DEFAULT NULL COMMENT 'Stores numeric statistic.',
-  `DataValue` varchar(50) DEFAULT NULL COMMENT 'Stores value for a data.',
-  `DataDisplay` varchar(255) DEFAULT NULL COMMENT 'Stores a display version of a data.',
-  PRIMARY KEY (`ID`)
+  `metaID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `metaKey` varchar(50) NOT NULL COMMENT 'Internal qualifier.',
+  `metaParentLevel` varchar(255) DEFAULT NULL COMMENT 'Table name of the parent item.',
+  `metaParentID` bigint(20) DEFAULT NULL COMMENT 'ID of the parent in the table (from ParentLevel).',
+  `metaStatNumeric` double DEFAULT NULL COMMENT 'Stores numeric statistic.',
+  `metaDataValue` varchar(50) DEFAULT NULL COMMENT 'Stores value for a data.',
+  `metaDataDisplay` varchar(255) DEFAULT NULL COMMENT 'Stores a display version of a data.',
+  PRIMARY KEY (`metaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Various metadata such as statistics and tables.';
 
+CREATE TABLE IF NOT EXISTS `package` (
+  `packID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `packSystem` bigint(20) DEFAULT NULL COMMENT 'Key to: system',
+  `packName` varchar(255) DEFAULT NULL COMMENT 'Display name.',
+  PRIMARY KEY (`packID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Packages are groups of applications within a suite.';
+
 CREATE TABLE IF NOT EXISTS `phase` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Suite` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: suite',
-  `Version` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: version',
-  `Environment` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: environment',
-  `Name` varchar(255) NOT NULL COMMENT 'Display name.',
-  `Description` text NOT NULL COMMENT 'Description or note about this phase of tests.',
-  PRIMARY KEY (`ID`)
+  `phaID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `phaSuite` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: suite',
+  `phaVersion` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: version',
+  `phaEnvironment` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: environment',
+  `phaName` varchar(255) NOT NULL COMMENT 'Display name.',
+  `phaDescription` text NOT NULL COMMENT 'Description or note about this phase of tests.',
+  PRIMARY KEY (`phaID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Phases of tests for combination of version-environment for a suite of applications.';
 
 CREATE TABLE IF NOT EXISTS `suite` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID',
-  `Account` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: account',
-  `Name` varchar(255) NOT NULL COMMENT 'Display name.',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Suites of applications.';
+  `suiteID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID',
+  `suiteAccount` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: account',
+  `suiteName` varchar(255) NOT NULL COMMENT 'Display name.',
+  PRIMARY KEY (`suiteID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Suites of applications.';
 
 CREATE TABLE IF NOT EXISTS `test` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Function` bigint(20) NOT NULL COMMENT 'Key to: function',
-  `Number` varchar(50) NOT NULL COMMENT 'Key to sort tests in the function.',
-  `Name` varchar(255) NOT NULL COMMENT 'Test Name.',
-  `Description` text NOT NULL COMMENT 'Description or note about the test.',
-  `Method` text NOT NULL COMMENT 'How to perform the test.',
-  `Result` text NOT NULL COMMENT 'Normal awaited result.',
-  PRIMARY KEY (`ID`)
+  `testID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `testFunction` bigint(20) NOT NULL COMMENT 'Key to: function',
+  `testNumber` varchar(50) NOT NULL COMMENT 'Key to sort tests in the function.',
+  `testName` varchar(255) NOT NULL COMMENT 'Test Name.',
+  `testDescription` text NOT NULL COMMENT 'Description or note about the test.',
+  `testMethod` text NOT NULL COMMENT 'How to perform the test.',
+  `testResult` text NOT NULL COMMENT 'Normal awaited result.',
+  PRIMARY KEY (`testID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tests for each functions.';
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Account` bigint(20) NOT NULL COMMENT 'Key to: account',
-  `Name` varchar(255) DEFAULT NULL COMMENT 'Display name.',
-  `Passwd` varchar(255) DEFAULT NULL COMMENT 'Hashed password.',
-  `PasswdExpired` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Flag for expired password.',
-  `Email` varchar(255) DEFAULT NULL COMMENT 'Email address.',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='SSTM Users.';
+  `userID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `userAccount` bigint(20) NOT NULL COMMENT 'Key to: account',
+  `userName` varchar(255) DEFAULT NULL COMMENT 'Display name.',
+  `userPasswd` varchar(255) DEFAULT NULL COMMENT 'Hashed password.',
+  `userPasswdExpired` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Flag for expired password.',
+  `userEmail` varchar(255) DEFAULT NULL COMMENT 'Email address.',
+  PRIMARY KEY (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='SSTM Users.';
 
 CREATE TABLE IF NOT EXISTS `version` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `Suite` bigint(20) NOT NULL COMMENT 'Key to: suite',
-  `Name` varchar(50) NOT NULL COMMENT 'Display name for version.',
-  PRIMARY KEY (`ID`)
+  `verID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
+  `verSuite` bigint(20) NOT NULL COMMENT 'Key to: suite',
+  `verName` varchar(50) NOT NULL COMMENT 'Display name for version.',
+  PRIMARY KEY (`verID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Versions of suites for which a phase of tests will be performed.';
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

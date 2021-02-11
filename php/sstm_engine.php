@@ -15,11 +15,11 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
     $json['message'] = "Unknown GET method: $method";
     
     if( $method == 'apps-get' ){
-        $db->where('a.Suite', $_GET['suite']);
-        $db->join('package p', 'a.Package = p.ID', 'LEFT');
-        $db->orderBy('p.Name', 'asc');
-        $db->orderBy('a.Name', 'asc');
-        $apps = $db->get('application a');
+        $db->where('appSuite', $_GET['suite']);
+        $db->join('package', 'appPackage = packID', 'LEFT');
+        $db->orderBy('packName', 'asc');
+        $db->orderBy('appName', 'asc');
+        $apps = $db->get('application');
         $temp = Array();
         foreach($apps as $app){
             $temp[] = $app;
@@ -31,8 +31,8 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         goto OutputJSON;
     }
     if( $method == 'envs-get' ){
-        $db->where('Suite', $_GET['suite']);
-        $db->orderBy('Name', 'asc');
+        $db->where('envSuite', $_GET['suite']);
+        $db->orderBy('envOrder', 'asc');
         $envs = $db->get('environment');
         $temp = Array();
         foreach($envs as $env){
@@ -45,8 +45,8 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         goto OutputJSON;
     }
     if( $method == 'vers-get' ){
-        $db->where('Suite', $_GET['suite']);
-        $db->orderBy('Name', 'asc');
+        $db->where('verSuite', $_GET['suite']);
+        $db->orderBy('verName', 'asc');
         $vers = $db->get('version');
         $temp = Array();
         foreach($vers as $ver){
@@ -77,8 +77,8 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
     # Add a new Suite
     if( $method == 'suite-new'){
         $newData = Array(
-            'Account'   => $_SESSION['Account'],
-            'Name'      => $input['Name']
+            'suiteAccount'   => $_SESSION['Account'],
+            'suiteName'      => $input['Name']
         );
         $json['newID'] = $db->insert('suite', $newData);
         goto OutputJSON;

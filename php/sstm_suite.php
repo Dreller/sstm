@@ -3,16 +3,15 @@ session_start();
 include_once('sstm_db.inc');
 
 $ID = $_GET['id'];
-$db->where('ID', $ID);
+$db->where('suiteID', $ID);
 $suite = $db->getOne('suite');
-
 
 
 ?>
 <p>&nbsp;<br>&nbsp;<br>&nbsp;<br></p>
 
 <div id="suiteIntro" class="ui segment">
-    <h2 class="ui dividing header"><?php echo $suite['Name']; ?></h2>
+    <h2 class="ui dividing header"><?php echo $suite['suiteName']; ?></h2>
     <div class="ui placeholder">
         <div class="line"></div>
         <div class="line"></div>
@@ -78,8 +77,9 @@ function updateApps(){
         var msg = JSON.parse(data['message']);
         for(var m in msg){
             // Add line
-            var appName = msg[m]['Name'];
-            var newLine = "<tr><td>" + appName + "</td></tr>";
+            var packName= msg[m]['packName'];
+            var appName = msg[m]['appName'];
+            var newLine = "<tr><td>" + packName + ' / ' + appName + "</td></tr>";
             $("#appTableBody").append(newLine);
         }
         $("#appLoader").removeClass("active");
@@ -93,7 +93,7 @@ function updateVersions(){
         var msg = JSON.parse(data['message']);
         for(var m in msg){
             // Add line
-            var verName = msg[m]['Name'];
+            var verName = msg[m]['verName'];
             var newLine = "<tr><td>" + verName + "</td></tr>";
             $("#verTableBody").append(newLine);
         }
@@ -108,7 +108,7 @@ function updateEnvironments(){
         var msg = JSON.parse(data['message']);
         for(var m in msg){
             // Add line
-            var envName = msg[m]['Name'];
+            var envName = msg[m]['envName'];
             var newLine = "<tr><td>" + envName + "</td></tr>";
             $("#envTableBody").append(newLine);
         }
