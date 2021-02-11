@@ -24,7 +24,7 @@ $suite = $db->getOne('suite');
 <div class="ui two column relaxed grid">
     <div class="column">
         <div id="applications" class="ui segment">
-            <h2 class="ui dividing header">Applications</h2>
+        <h2 class="ui dividing header">Applications</h2>
             <div id="appLoader" class="ui loader"></div>
             <table id="appTable" class="ui celled table">
                 <thead id="appTableHead">
