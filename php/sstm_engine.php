@@ -70,15 +70,20 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
 
     $json['message'] = "Unknown POST method: $method";
 
-    if( $method == 'auth' ){
-        $json = [];
-        goto OutputJSON;
-    }
     # Add a new Suite
     if( $method == 'suite-new'){
         $newData = Array(
             'suiteAccount'   => $_SESSION['Account'],
             'suiteName'      => $input['Name']
+        );
+        $json['newID'] = $db->insert('suite', $newData);
+        goto OutputJSON;
+    }
+    # Add a new Package
+    if( $method == 'pack-new'){
+        $newData = Array(
+            'packSystem'   => $input['System'],
+            'packName'     => $input['Name']
         );
         $json['newID'] = $db->insert('suite', $newData);
         goto OutputJSON;

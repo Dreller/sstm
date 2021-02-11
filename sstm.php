@@ -45,6 +45,25 @@
     </div>
 </div>
 
+<!-- On-demand Form Modal -->  
+<div id="modalOnDemand" class="ui modal">
+    <i class="close icon"></i>
+    <div id="onDemandTitle" class="header"></div>
+    <!-- Form -->  
+    <div id="onDemandFormInsert" class="content">
+        
+        
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Cancel
+        </div>
+        <div id="bt_odFormOK" class="ui positive button" onclick="newSuite();">
+            OK
+        </div>
+    </div>
+</div>
+
 
 
 <script src="js/jquery_3.5.1.js"></script>
@@ -53,6 +72,7 @@
 <script>
 
 var currentForm = '';
+var currentSuite = 0;
 
     /**
         Load a screen in 'mainBox' div.
@@ -61,8 +81,28 @@ var currentForm = '';
         $("#mainBox").load('php/' + name );
     }
     function loadSuite(id){
+        currentSuite = id;
         loadScreen('sstm_suite.php?id=' + id);
         $("#navBarAdd").removeClass("disabled");
+    }
+
+    function NewApplication(){
+        onDemandForm('sstm_form_app_new.php?s=' + currentSuite, "New Application");
+    }
+    function NewPackage(){
+        onDemandForm('sstm_form_pack_new.php?s=' + currentSuite, "New Package");
+    }
+    function NewEnvironment(){
+        onDemandForm('sstm_form_env_new.php?s=' + currentSuite, "New Environment");
+    }
+    function NewVersion(){
+        onDemandForm('sstm_form_ver_new.php?s=' + currentSuite, "New Version");
+    }
+    function onDemandForm(file, title){
+        $("#onDemandTitle").html(title);
+        $("#onDemandFormInsert").load('php/' + file, function(){
+            $("#modalOnDemand").modal('show');
+        });
     }
 
     function displayModal(name){
