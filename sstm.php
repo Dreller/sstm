@@ -60,6 +60,10 @@ var currentForm = '';
     function loadScreen(name){
         $("#mainBox").load('php/' + name );
     }
+    function loadSuite(id){
+        loadScreen('sstm_suite.php?id=' + id);
+        $("#navBarAdd").removeClass("disabled");
+    }
 
     function displayModal(name){
         $("#modal" + name).modal('show');

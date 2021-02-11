@@ -9,7 +9,7 @@ $suites = $db->get('suite');
 
 $suiteList = '';
 foreach($suites as $suite){
-    $suiteList .= '<a class="item" href="#" onclick="loadScreen(\'sstm_suite.php?id='.$suite['suiteID'].'\')">'.$suite['suiteName'].'</a>';
+    $suiteList .= '<a class="item" href="#" onclick="loadSuite('.$suite['suiteID'].')">'.$suite['suiteName'].'</a>';
 }
 
 
@@ -29,7 +29,20 @@ foreach($suites as $suite){
             <a class="item" href="#" onclick="displayModal('NewSuite');"><i class="plus circle icon"></i>&nbsp;New suite</a>
         </div>
     </div>
-        <div class="ui simple dropdown item">
+
+    <div id="navBarAdd" class="ui simple dropdown item disabled">
+        Add <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" href="#" onclick="displayModal('NewTest');">Test</a>
+            <a class="item" href="#" onclick="displayModal('NewVersion');">Version</a>
+            <a class="item" href="#" onclick="displayModal('NewApplication');">Application</a>
+            <a class="item" href="#" onclick="displayModal('NewPackage');">Package</a>
+            <a class="item" href="#" onclick="displayModal('NewEnvironment');">Environment</a>
+        </div>
+    </div>
+
+
+        <div class="ui simple dropdown item right">
         Setup <i class="dropdown icon"></i>
         <div class="menu">
             <a class="item" href="#" onclick="loadScreen('sstm_list.php?el=suite');">Suites</a>
