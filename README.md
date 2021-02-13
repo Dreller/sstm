@@ -24,20 +24,20 @@ In SSTM, you will define tests to perform for your applications.  But first, ple
 ## Example
 To help you understand, here is a simple example:
 
-Suite:  Microsoft Office
-    Package:  Word
-        Application:  Writing
-            Function: Predefined Styles
-                Test 1: Apply predefined style "Title" on a selected segment of text.
-                Test 2: Apply stype "Normal" to remove any style applied on a selected segment of text.
-            Function: Insert medias
-                Test 1: Insert a picture (file type JPEG)
-                Test 2: Insert a picture (file type PNG)
-                Test 3: Insert a Youtube video
-        Application: Mail merge
-            Function: Create labels
-                Test 1: Create labels from an Excel spreadsheet
-                Test 2: Create labels from a CSV file
+* Suite:  Microsoft Office
+  * Package:  Word
+    * Application:  Writing
+      * Function: Predefined Styles
+        * Test 1: Apply predefined style "Title" on a selected segment of text.
+        * Test 2: Apply stype "Normal" to remove any style applied on a selected segment of text.
+      * Function: Insert medias
+        * Test 1: Insert a picture (file type JPEG)
+        * Test 2: Insert a picture (file type PNG)
+        * Test 3: Insert a Youtube video
+    * Application: Mail merge
+      * Function: Create labels
+        * Test 1: Create labels from an Excel spreadsheet
+        * Test 2: Create labels from a CSV file
 
 
 # SSTM - Add a suite
