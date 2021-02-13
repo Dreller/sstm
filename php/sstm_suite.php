@@ -77,11 +77,12 @@ function updateApps(){
     $.get("php/sstm_engine.php?method=apps-get", function(data){
         $("#appTableBody tr").remove();
         var msg = JSON.parse(data['message']);
+        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditApplication(?);"></i>';
         for(var m in msg){
             // Add line
             var packName= msg[m]['packName'];
             var appName = msg[m]['appName'];
-            var newLine = "<tr><td>" + packName + ' / ' + appName + "</td></tr>";
+            var newLine = "<tr><td>" + packName + ' / ' + appName + editIcon.replace('?', msg[m]['appID']) + "</td></tr>";
             $("#appTableBody").append(newLine);
         }
         $("#appLoader").removeClass("active");
@@ -93,10 +94,11 @@ function updateVersions(){
     $.get("php/sstm_engine.php?method=vers-get", function(data){
         $("#verTableBody tr").remove();
         var msg = JSON.parse(data['message']);
+        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditVersion(?);"></i>';
         for(var m in msg){
             // Add line
             var verName = msg[m]['verName'];
-            var newLine = "<tr><td>" + verName + "</td></tr>";
+            var newLine = "<tr><td>" + verName + editIcon.replace('?', msg[m]['verID']) + "</td></tr>";
             $("#verTableBody").append(newLine);
         }
         $("#verLoader").removeClass("active");
@@ -108,15 +110,18 @@ function updateEnvironments(){
     $.get("php/sstm_engine.php?method=envs-get", function(data){
         $("#envTableBody tr").remove();
         var msg = JSON.parse(data['message']);
+        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditEnvironment(?);"></i>';
         for(var m in msg){
             // Add line
             var envName = msg[m]['envName'];
-            var newLine = "<tr><td>" + envName + "</td></tr>";
+            var newLine = "<tr><td>" + envName + editIcon.replace('?', msg[m]['envID']) + "</td></tr>";
             $("#envTableBody").append(newLine);
         }
         $("#envLoader").removeClass("active");
     });
 }
+
+$('.dropdown').dropdown();
 
 $(document).ready(function(){
     updateAll();

@@ -133,6 +133,44 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
         $json['message'] = 'updateApps';
         goto OutputJSON;
     }
+
+    # Edit Environment
+    if( $method == 'env-chg'){
+        $newData = Array(
+            'envName'     => $input['envName']
+        );
+        $db->where('envID', $_SESSION['current-item-id']);
+        $db->where('envSuite', $_SESSION['current-suite']);
+        $db->update('environment', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateEnvironments';
+        goto OutputJSON;
+    }
+    # Edit Version
+    if( $method == 'ver-chg'){
+        $newData = Array(
+            'verName'     => $input['verName']
+        );
+        $db->where('verID', $_SESSION['current-item-id']);
+        $db->where('verSuite', $_SESSION['current-suite']);
+        $db->update('version', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateVersions';
+        goto OutputJSON;
+    }
+    # Edit Application
+    if( $method == 'app-chg'){
+        $newData = Array(
+            'appPackage' => $input['appPackage'],
+            'appName'    => $input['appName']
+        );
+        $db->where('appID', $_SESSION['current-item-id']);
+        $db->where('appSuite', $_SESSION['current-suite']);
+        $db->update('application', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateApps';
+        goto OutputJSON;
+    }
     
 
 

@@ -87,17 +87,28 @@ var currentSuite = 0;
     }
 
     function NewApplication(){
-        onDemandForm('sstm_form_app_new.php?s=' + currentSuite, "New Application");
+        onDemandForm('sstm_form_app_new.php', "New Application");
     }
     function NewPackage(){
-        onDemandForm('sstm_form_pack_new.php?s=' + currentSuite, "New Package");
+        onDemandForm('sstm_form_pack_new.php', "New Package");
     }
     function NewEnvironment(){
-        onDemandForm('sstm_form_env_new.php?s=' + currentSuite, "New Environment");
+        onDemandForm('sstm_form_env_new.php', "New Environment");
     }
     function NewVersion(){
-        onDemandForm('sstm_form_ver_new.php?s=' + currentSuite, "New Version");
+        onDemandForm('sstm_form_ver_new.php', "New Version");
     }
+
+    function EditApplication(id){
+        onDemandForm('sstm_form_app_new.php?id=' + id, "Edit Application");
+    }
+    function EditEnvironment(id){
+        onDemandForm('sstm_form_env_new.php?id=' + id, "Edit Environment");
+    }
+    function EditVersion(id){
+        onDemandForm('sstm_form_ver_new.php?id=' + id, "Edit Version");
+    }
+
     function onDemandForm(file, title){
         $("#onDemandTitle").html(title);
         $("#odForm").load('php/' + file, function(){
@@ -192,6 +203,8 @@ var currentSuite = 0;
             $(btnID).removeClass("loading");
         }
     }    
+
+    $('.ui.dropdown').dropdown();
 
 
 </script>
