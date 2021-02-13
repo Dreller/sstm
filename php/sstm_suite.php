@@ -3,8 +3,10 @@ session_start();
 include_once('sstm_db.inc');
 
 $ID = $_GET['id'];
+$_SESSION['current-suite'] = $ID;
 $db->where('suiteID', $ID);
 $suite = $db->getOne('suite');
+
 
 
 ?>
@@ -72,7 +74,7 @@ function updateAll(){
 
 function updateApps(){
     $("#appLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=apps-get&suite=<?php echo $ID; ?>", function(data){
+    $.get("php/sstm_engine.php?method=apps-get", function(data){
         $("#appTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         for(var m in msg){
@@ -88,7 +90,7 @@ function updateApps(){
 
 function updateVersions(){
     $("#verLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=vers-get&suite=<?php echo $ID; ?>", function(data){
+    $.get("php/sstm_engine.php?method=vers-get", function(data){
         $("#verTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         for(var m in msg){
@@ -103,7 +105,7 @@ function updateVersions(){
 
 function updateEnvironments(){
     $("#envLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=envs-get&suite=<?php echo $ID; ?>", function(data){
+    $.get("php/sstm_engine.php?method=envs-get", function(data){
         $("#envTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         for(var m in msg){

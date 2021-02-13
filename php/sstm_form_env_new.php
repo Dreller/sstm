@@ -2,12 +2,9 @@
 session_start();
 include_once('sstm_db.inc');
 
-$SYSTEM = $_GET['s'];
-
 ?>
-<div class="ui form">
-    <div class="field">
-        <label>Environment name</label>
-        <input type="text">
-    </div>
+<div class="field">
+    <label>Environment name</label>
+    <input name="envName" id="envName" type="text" required>
 </div>
+<input type="hidden" name="method" value="env-new">

@@ -2,10 +2,8 @@
 session_start();
 include_once('sstm_db.inc');
 
-$SYSTEM = $_GET['s'];
-
 # Get all Packages
-$db->where('packSystem', $SYSTEM);
+$db->where('packSuite', $_SESSION['current-suite']);
 $db->orderBy('packName', 'asc');
 $packs = $db->get('package');
 
@@ -16,15 +14,14 @@ foreach($packs as $pack){
 }
 
 ?>
-<div class="ui form">
-    <div class="field">
-        <label>Package</label>
-        <select class="ui search dropdown">
-            <?php echo $optList; ?>
-        </select>
-    </div>
-    <div class="field">
-        <label>Application name</label>
-        <input type="text">
-    </div>
+<div class="field">
+    <label>Package</label>
+    <select name="appPackage" id="appPackage" class="ui search dropdown" required>
+        <?php echo $optList; ?>
+    </select>
 </div>
+<div class="field">
+    <label>Application name</label>
+    <input name="appName" id="appName" type="text" required>
+</div>
+<input type="hidden" name="method" value="app-new">

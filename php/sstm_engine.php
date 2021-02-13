@@ -14,8 +14,15 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
     $method = $_GET['method'];
     $json['message'] = "Unknown GET method: $method";
     
+    if( $method == 'suite-set' ){
+        $_SESSION['current-suite'] = $_GET['s'];
+        $json['status'] = 'ok';
+        $json['message'] = '';
+        goto OutputJSON;
+    }
+
     if( $method == 'apps-get' ){
-        $db->where('appSuite', $_GET['suite']);
+        $db->where('appSuite', $_SESSION['current-suite']);
         $db->join('package', 'appPackage = packID', 'LEFT');
         $db->orderBy('packName', 'asc');
         $db->orderBy('appName', 'asc');
@@ -31,7 +38,7 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         goto OutputJSON;
     }
     if( $method == 'envs-get' ){
-        $db->where('envSuite', $_GET['suite']);
+        $db->where('envSuite', $_SESSION['current-suite']);
         $db->orderBy('envOrder', 'asc');
         $envs = $db->get('environment');
         $temp = Array();
@@ -45,7 +52,7 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         goto OutputJSON;
     }
     if( $method == 'vers-get' ){
-        $db->where('verSuite', $_GET['suite']);
+        $db->where('verSuite', $_SESSION['current-suite']);
         $db->orderBy('verName', 'asc');
         $vers = $db->get('version');
         $temp = Array();
@@ -77,17 +84,58 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
             'suiteName'      => $input['Name']
         );
         $json['newID'] = $db->insert('suite', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = '';
         goto OutputJSON;
     }
     # Add a new Package
     if( $method == 'pack-new'){
         $newData = Array(
-            'packSystem'   => $input['System'],
-            'packName'     => $input['Name']
+            'packSuite'   => $_SESSION['current-suite'],
+            'packName'     => $input['packName']
         );
-        $json['newID'] = $db->insert('suite', $newData);
+        $json['newID'] = $db->insert('package', $newData);
+        $json['status'] = 'ok';
+        $json['message'] = '';
         goto OutputJSON;
     }
+    # Add a new Environment
+    if( $method == 'env-new'){
+        $newData = Array(
+            'envSuite'   => $_SESSION['current-suite'],
+            'envName'     => $input['envName']
+        );
+        $json['newID'] = $db->insert('environment', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateEnvironments';
+        goto OutputJSON;
+    }
+    # Add a new Version
+    if( $method == 'ver-new'){
+        $newData = Array(
+            'verSuite'   => $_SESSION['current-suite'],
+            'verName'     => $input['verName']
+        );
+        $json['newID'] = $db->insert('version', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateVersions';
+        goto OutputJSON;
+    }
+    # Add a new Application
+    if( $method == 'app-new'){
+        $newData = Array(
+            'appSuite'   => $_SESSION['current-suite'],
+            'appPackage' => $input['appPackage'],
+            'appName'    => $input['appName']
+        );
+        $json['newID'] = $db->insert('application', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updateApps';
+        goto OutputJSON;
+    }
+    
+
+
     
 
 }

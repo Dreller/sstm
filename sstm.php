@@ -50,15 +50,15 @@
     <i class="close icon"></i>
     <div id="onDemandTitle" class="header"></div>
     <!-- Form -->  
-    <div id="onDemandFormInsert" class="content">
-        
-        
-    </div>
+    <form id="odForm" class="content ui form">
+    
+
+    </form>
     <div class="actions">
         <div class="ui black deny button">
             Cancel
         </div>
-        <div id="bt_odFormOK" class="ui positive button" onclick="newSuite();">
+        <div id="bt_odFormOK" class="ui positive button" onclick="sendOnDemand();">
             OK
         </div>
     </div>
@@ -100,11 +100,19 @@ var currentSuite = 0;
     }
     function onDemandForm(file, title){
         $("#onDemandTitle").html(title);
-        $("#onDemandFormInsert").load('php/' + file, function(){
+        $("#odForm").load('php/' + file, function(){
             $("#modalOnDemand").modal('show');
         });
     }
-
+    function sendOnDemand(){
+        setForm("odForm");
+        setBtnLoad(true);
+        if( !validateForm() ){
+            setBtnLoad(false);
+            return false;
+        }
+        sendForm(wrapForm());
+    }
     function displayModal(name){
         $("#modal" + name).modal('show');
     }
@@ -165,6 +173,12 @@ var currentSuite = 0;
     function processResult(myData){
         setBtnLoad(false);
         console.log(myData);
+
+        if( myData['status'] == 'callback' ){
+            var functionToCall = myData['message'];
+            window[functionToCall]();
+        }
+
     }
     function isEmpty(element){
         // Source: https://stackoverflow.com/a/6813294
