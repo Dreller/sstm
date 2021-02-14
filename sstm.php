@@ -87,34 +87,34 @@ var currentSuite = 0;
     }
 
     function NewApplication(){
-        onDemandForm('sstm_form_app_new.php', "New Application");
+        onDemandForm('app_edit.php', "New Application");
     }
     function NewPackage(){
-        onDemandForm('sstm_form_pack_new.php', "New Package");
+        onDemandForm('package_edit.php', "New Package");
     }
     function NewEnvironment(){
-        onDemandForm('sstm_form_env_new.php', "New Environment");
+        onDemandForm('environ_edit.php', "New Environment");
     }
     function NewVersion(){
-        onDemandForm('sstm_form_ver_new.php', "New Version");
+        onDemandForm('version_edit.php', "New Version");
     }
 
     function EditApplication(id){
-        onDemandForm('sstm_form_app_new.php?id=' + id, "Edit Application");
+        onDemandForm('app_edit.php?id=' + id, "Edit Application");
     }
     function EditEnvironment(id){
-        onDemandForm('sstm_form_env_new.php?id=' + id, "Edit Environment");
+        onDemandForm('environ_edit.php?id=' + id, "Edit Environment");
     }
     function EditVersion(id){
-        onDemandForm('sstm_form_ver_new.php?id=' + id, "Edit Version");
+        onDemandForm('version_edit.php?id=' + id, "Edit Version");
     }
     function EditPackage(id){
-        onDemandForm('sstm_form_pack_new.php?id=' + id, "Edit Package");
+        onDemandForm('package_edit.php?id=' + id, "Edit Package");
     }
 
     function onDemandForm(file, title){
         $("#onDemandTitle").html(title);
-        $("#odForm").load('php/' + file, function(){
+        $("#odForm").load('php/sstm_form_' + file, function(){
             $("#modalOnDemand").modal('show');
         });
     }
