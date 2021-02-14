@@ -58,12 +58,33 @@
         <div class="ui black deny button">
             Cancel
         </div>
+        <div id="bt_odFormDelete" class="ui disabled negative button" onclick="sendOnDemandDelete();">
+            Delete
+        </div>
         <div id="bt_odFormOK" class="ui positive button" onclick="sendOnDemand();">
             OK
         </div>
     </div>
 </div>
 
+
+<div id="confirmDelete" class="ui basic modal">
+    <div class="ui icon header">
+        <i class="trash alternate outline icon"></i>
+        Confirm deletion 
+    </div>
+    <div class="content">
+        <p>Do you want to delete <span id="deleteItemName"></span> ?</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            No
+        </div>
+        <div class="ui green ok inverted button" onclick="deletionOK();">
+            Yes
+        </div>
+    </div>
+</div>
 
 
 <script src="js/jquery_3.5.1.js"></script>
@@ -73,6 +94,8 @@
 
 var currentForm = '';
 var currentSuite = 0;
+var currentType = '';
+var currentPrefix = '';
 
     /**
         Load a screen in 'mainBox' div.
@@ -87,28 +110,44 @@ var currentSuite = 0;
     }
 
     function NewApplication(){
+        $("#bt_odFormDelete").addClass("disabled");
         onDemandForm('spave_edit.php?type=application', "New Application");
     }
     function NewPackage(){
+        $("#bt_odFormDelete").addClass("disabled");
         onDemandForm('spave_edit.php?type=package', "New Package");
     }
     function NewEnvironment(){
+        $("#bt_odFormDelete").addClass("disabled");
         onDemandForm('spave_edit.php?type=environment', "New Environment");
     }
     function NewVersion(){
+        $("#bt_odFormDelete").addClass("disabled");
         onDemandForm('spave_edit.php?type=version', "New Version");
     }
 
     function EditApplication(id){
+        $("#bt_odFormDelete").removeClass("disabled");
+        currentType = 'application';
+        currentPrefix = 'app';
         onDemandForm('spave_edit.php?type=application&id=' + id, "Edit Application");
     }
     function EditEnvironment(id){
+        $("#bt_odFormDelete").removeClass("disabled");
+        currentType = 'environment';
+        currentPrefix = 'env';
         onDemandForm('spave_edit.php?type=environment&id=' + id, "Edit Environment");
     }
     function EditVersion(id){
+        $("#bt_odFormDelete").removeClass("disabled");
+        currentType = 'version';
+        currentPrefix = 'ver';
         onDemandForm('spave_edit.php?type=version&id=' + id, "Edit Version");
     }
     function EditPackage(id){
+        $("#bt_odFormDelete").removeClass("disabled");
+        currentType = 'package';
+        currentPrefix = 'pack';
         onDemandForm('spave_edit.php?type=package&id=' + id, "Edit Package");
     }
 
@@ -118,6 +157,17 @@ var currentSuite = 0;
             $("#modalOnDemand").modal('show');
         });
     }
+    function sendOnDemandDelete(){
+        var desc = currentType + ' ' + $('#' + currentPrefix + 'Name').val();
+        $("#deleteItemName").html(desc);
+        $("#confirmDelete").modal('show');
+    }
+    function deletionOK(){
+        var temp = new Object;
+        temp['method'] = currentType + '-del';
+        sendForm(JSON.stringify(temp));
+    }
+
     function sendOnDemand(){
         setForm("odForm");
         setBtnLoad(true);

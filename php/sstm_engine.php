@@ -172,8 +172,8 @@ if( $action == 'del' || $action == 'rem' ){
     $db->where($sqlPrefix."Suite", $_SESSION['current-suite']);
     $db->where($sqlPrefix."ID", $_SESSION['current-item-id']);
     if( $db->delete($item) ){
-        $json['status'] = 'ok';
-        $json['message']= "$item deleted";
+        $json['status'] = 'callback';
+        $json['message']= $callback;
     }else{
         $json['status'] = 'error';
         $json['message']= $db->getLastError();
