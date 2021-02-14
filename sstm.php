@@ -108,6 +108,9 @@ var currentSuite = 0;
     function EditVersion(id){
         onDemandForm('sstm_form_ver_new.php?id=' + id, "Edit Version");
     }
+    function EditPackage(id){
+        onDemandForm('sstm_form_pack_new.php?id=' + id, "Edit Package");
+    }
 
     function onDemandForm(file, title){
         $("#onDemandTitle").html(title);

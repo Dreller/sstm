@@ -35,6 +35,16 @@ $suite = $db->getOne('suite');
                 </tbody>
             </table>
         </div>
+        <div id="packages" class="ui segment">
+        <h2 class="ui dividing header">Packages</h2>
+            <div id="packLoader" class="ui loader"></div>
+            <table id="packTable" class="ui celled table">
+                <thead id="packTableHead">
+                </thead>
+                <tbody id="packTableBody">
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="column">
         <div id="environments" class="ui segment">
@@ -65,9 +75,11 @@ $suite = $db->getOne('suite');
 
 function updateAll(){
     $("#appLoader").addClass("active");
+    $("#packLoader").addClass("active");
     $("#envLoader").addClass("active");
     $("#verLoader").addClass("active");
     updateApps();
+    updatePackages();
     updateVersions();
     updateEnvironments();
 }
@@ -119,6 +131,27 @@ function updateEnvironments(){
         }
         $("#envLoader").removeClass("active");
     });
+}
+
+function updatePackages(){
+    $("#packLoader").addClass("active");
+    $.get("php/sstm_engine.php?method=pack-get", function(data){
+        $("#packTableBody tr").remove();
+        var msg = JSON.parse(data['message']);
+        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditPackage(?);"></i>';
+        for(var m in msg){
+            // Add line
+            var packName = msg[m]['packName'];
+            var newLine = "<tr><td>" + packName + editIcon.replace('?', msg[m]['packID']) + "</td></tr>";
+            $("#packTableBody").append(newLine);
+        }
+        $("#packLoader").removeClass("active");
+    });
+}
+
+function updatePacksAndApps(){
+    updatePackages();
+    updateApps();
 }
 
 $('.dropdown').dropdown();

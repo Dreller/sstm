@@ -27,42 +27,36 @@ if( isset($_GET['method']) && $_GET['method'] != '' ){
         $db->orderBy('packName', 'asc');
         $db->orderBy('appName', 'asc');
         $apps = $db->get('application');
-        $temp = Array();
-        foreach($apps as $app){
-            $temp[] = $app;
-        }
-
         $json['status'] = 'ok';
         $json['count'] = count($apps);
-        $json['message'] = json_encode($temp);
+        $json['message'] = json_encode($apps);
         goto OutputJSON;
     }
     if( $method == 'envs-get' ){
         $db->where('envSuite', $_SESSION['current-suite']);
         $db->orderBy('envOrder', 'asc');
         $envs = $db->get('environment');
-        $temp = Array();
-        foreach($envs as $env){
-            $temp[] = $env;
-        }
-
         $json['status'] = 'ok';
         $json['count'] = count($envs);
-        $json['message'] = json_encode($temp);
+        $json['message'] = json_encode($envs);
         goto OutputJSON;
     }
     if( $method == 'vers-get' ){
         $db->where('verSuite', $_SESSION['current-suite']);
         $db->orderBy('verName', 'asc');
         $vers = $db->get('version');
-        $temp = Array();
-        foreach($vers as $ver){
-            $temp[] = $ver;
-        }
-
         $json['status'] = 'ok';
         $json['count'] = count($vers);
-        $json['message'] = json_encode($temp);
+        $json['message'] = json_encode($vers);
+        goto OutputJSON;
+    }
+    if( $method == 'pack-get' ){
+        $db->where('packSuite', $_SESSION['current-suite']);
+        $db->orderBy('packName', 'asc');
+        $packs = $db->get('package');
+        $json['status'] = 'ok';
+        $json['count'] = count($packs);
+        $json['message'] = json_encode($packs);
         goto OutputJSON;
     }
 
@@ -156,6 +150,18 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
         $db->update('version', $newData);
         $json['status'] = 'callback';
         $json['message'] = 'updateVersions';
+        goto OutputJSON;
+    }
+    # Edit Package
+    if( $method == 'pack-chg'){
+        $newData = Array(
+            'packName'     => $input['packName']
+        );
+        $db->where('packID', $_SESSION['current-item-id']);
+        $db->where('packSuite', $_SESSION['current-suite']);
+        $db->update('package', $newData);
+        $json['status'] = 'callback';
+        $json['message'] = 'updatePacksAndApps';
         goto OutputJSON;
     }
     # Edit Application
