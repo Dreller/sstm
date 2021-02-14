@@ -93,7 +93,7 @@ var currentSuite = 0;
         onDemandForm('package_edit.php', "New Package");
     }
     function NewEnvironment(){
-        onDemandForm('environ_edit.php', "New Environment");
+        onDemandForm('spave_edit.php?type=environment', "New Environment");
     }
     function NewVersion(){
         onDemandForm('version_edit.php', "New Version");
@@ -103,7 +103,7 @@ var currentSuite = 0;
         onDemandForm('app_edit.php?id=' + id, "Edit Application");
     }
     function EditEnvironment(id){
-        onDemandForm('environ_edit.php?id=' + id, "Edit Environment");
+        onDemandForm('spave_edit.php?type=environment&id=' + id, "Edit Environment");
     }
     function EditVersion(id){
         onDemandForm('version_edit.php?id=' + id, "Edit Version");

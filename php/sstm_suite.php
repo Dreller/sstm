@@ -7,8 +7,6 @@ $_SESSION['current-suite'] = $ID;
 $db->where('suiteID', $ID);
 $suite = $db->getOne('suite');
 
-
-
 ?>
 <p>&nbsp;<br>&nbsp;<br>&nbsp;<br></p>
 
