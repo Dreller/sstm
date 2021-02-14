@@ -83,6 +83,11 @@ $_SESSION['current-item-id']    = $thisID;
 $_SESSION['current-method']     = $thisMethod;
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FORM UTILITIES
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+include_once("sstm_form.inc");
+
 ## Generate Form
 $i = 0;
 foreach($inputNames as $inputName ){
@@ -93,7 +98,13 @@ foreach($inputNames as $inputName ){
     }
     echo '<div class="field">';
     echo '<label>'.$inputLabels[$i].'</label>';
-    echo '<input type="'.$inputTypes[$i].'" name="'.$fieldName.'" id="'.$fieldName.'" value="'.$value.'" required>';
+
+    $parms = Array(
+        'type'  => $inputTypes[$i],
+        'name'  => $fieldName,
+        'value' => $value
+    );
+    echo buildInput($parms);
     echo '</div>';
     $i++;
 }
