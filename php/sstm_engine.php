@@ -22,7 +22,7 @@ if( getenv('REQUEST_METHOD') == 'POST' ){
 }
 # At this point, if 'method' variable is not set, it means we were not
 # able to determine what the call wants.
-if( $isset($method) ){
+if( !isset($method) ){
     $json['message'] = '(SSTM) Unable to find a method in the call.';
     goto OutputJSON;
 }
@@ -91,7 +91,6 @@ if( $action == 'set' ){
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 if( $action == 'get' ){
     $db->where($sqlPrefix.'Suite', $_SESSION['current-suite']);
-    $db->where($sqlPrefix.'ID', $input['id']);
     
     # APPLICATION: Join Package infos
     if( $item == 'application' ){
@@ -155,8 +154,8 @@ if( $action == 'upd' || $action == 'chg' ){
     }
     $db->where($sqlPrefix."ID", $_SESSION['current-item-id']);
     if( $db->update($item, $input) ){
-        $json['status']  = 'ok';
-        $json['message'] = '';
+        $json['status']  = 'callback';
+        $json['message'] = $callback;
     }else{
         $json['status']  = 'error';
         $json['message'] = $db->getLastError();
@@ -192,4 +191,5 @@ goto OutputJSON;
 
 OutputJSON:
     header('Content-Type: application/json');
+    $json['debug']      = "> ".$db->getLastQuery();
     echo json_encode($json);

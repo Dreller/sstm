@@ -87,29 +87,29 @@ var currentSuite = 0;
     }
 
     function NewApplication(){
-        onDemandForm('app_edit.php', "New Application");
+        onDemandForm('spave_edit.php?type=application', "New Application");
     }
     function NewPackage(){
-        onDemandForm('package_edit.php', "New Package");
+        onDemandForm('spave_edit.php?type=package', "New Package");
     }
     function NewEnvironment(){
         onDemandForm('spave_edit.php?type=environment', "New Environment");
     }
     function NewVersion(){
-        onDemandForm('version_edit.php', "New Version");
+        onDemandForm('spave_edit.php?type=version', "New Version");
     }
 
     function EditApplication(id){
-        onDemandForm('app_edit.php?id=' + id, "Edit Application");
+        onDemandForm('spave_edit.php?type=application&id=' + id, "Edit Application");
     }
     function EditEnvironment(id){
         onDemandForm('spave_edit.php?type=environment&id=' + id, "Edit Environment");
     }
     function EditVersion(id){
-        onDemandForm('version_edit.php?id=' + id, "Edit Version");
+        onDemandForm('spave_edit.php?type=version&id=' + id, "Edit Version");
     }
     function EditPackage(id){
-        onDemandForm('package_edit.php?id=' + id, "Edit Package");
+        onDemandForm('spave_edit.php?type=package&id=' + id, "Edit Package");
     }
 
     function onDemandForm(file, title){

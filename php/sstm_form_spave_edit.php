@@ -86,13 +86,14 @@ $_SESSION['current-method']     = $thisMethod;
 ## Generate Form
 $i = 0;
 foreach($inputNames as $inputName ){
+    $fieldName = $sqlPrefix.$inputName;
     $value = '';
     if( $editMode ){
-        $value = $data[$sqlPrefix.$inputName];
+        $value = $data[$fieldName];
     }
     echo '<div class="field">';
     echo '<label>'.$inputLabels[$i].'</label>';
-    echo '<input type="'.$inputTypes[$i].'" name="'.$inputName.'" id="'.$inputName.'" value="'.$value.'" required>';
+    echo '<input type="'.$inputTypes[$i].'" name="'.$fieldName.'" id="'.$fieldName.'" value="'.$value.'" required>';
     echo '</div>';
     $i++;
 }

@@ -84,7 +84,7 @@ function updateAll(){
 
 function updateApps(){
     $("#appLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=apps-get", function(data){
+    $.get("php/sstm_engine.php?method=application-get", function(data){
         $("#appTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditApplication(?);"></i>';
@@ -101,7 +101,7 @@ function updateApps(){
 
 function updateVersions(){
     $("#verLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=vers-get", function(data){
+    $.get("php/sstm_engine.php?method=version-get", function(data){
         $("#verTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditVersion(?);"></i>';
@@ -117,7 +117,7 @@ function updateVersions(){
 
 function updateEnvironments(){
     $("#envLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=envs-get", function(data){
+    $.get("php/sstm_engine.php?method=environment-get", function(data){
         $("#envTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditEnvironment(?);"></i>';
@@ -133,7 +133,7 @@ function updateEnvironments(){
 
 function updatePackages(){
     $("#packLoader").addClass("active");
-    $.get("php/sstm_engine.php?method=pack-get", function(data){
+    $.get("php/sstm_engine.php?method=package-get", function(data){
         $("#packTableBody tr").remove();
         var msg = JSON.parse(data['message']);
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditPackage(?);"></i>';
