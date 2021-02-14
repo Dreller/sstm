@@ -73,7 +73,7 @@ $callback  = '';
         case 'application':
             $sqlPrefix = 'app';
             $sqlSort   = 'packName';
-            $callback  = 'updateApplications';
+            $callback  = 'updateApps';
             break;
     }
 
@@ -91,7 +91,8 @@ if( $action == 'set' ){
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 if( $action == 'get' ){
     $db->where($sqlPrefix.'Suite', $_SESSION['current-suite']);
-    
+    $db->orderBy($sqlSort, 'asc');
+
     # APPLICATION: Join Package infos
     if( $item == 'application' ){
         $db->join('package', 'appPackage = packID', 'LEFT');
@@ -125,7 +126,7 @@ if( $action == 'new' || $action == 'add' ){
     
     $newID = $db->insert($item, $new);
     if( $newID ){
-        $json['id']     = $id;
+        $json['id']     = $newID;
         $json['status'] = 'callback';
         $json['message']= $callback;
     }else{

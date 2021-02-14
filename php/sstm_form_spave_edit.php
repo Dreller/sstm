@@ -31,6 +31,7 @@ $sqlTable   = $thisType;
 
 $inputNames = Array('Name');
 $inputTypes = Array('text');
+$inputExtra = Array();
 
     switch($thisType){
         case 'version':
@@ -47,7 +48,15 @@ $inputTypes = Array('text');
             break;
         case 'application':
             $sqlPrefix = 'app';
-            $inputLabels = Array('Application Name');
+            $inputNames  = Array('Name', 'Package');
+            $inputTypes  = Array('text', 'select');
+            $inputLabels = Array('Application Name', 'Package');
+            $inputExtra  = Array(
+                Array(),
+                Array(
+                    "table" => "package"
+                )
+            );
             break;
     }
 
@@ -104,6 +113,10 @@ foreach($inputNames as $inputName ){
         'name'  => $fieldName,
         'value' => $value
     );
+    # Merge Extra if set
+    if( isset($inputExtra[$i]) ){
+        $parms = array_merge($parms, $inputExtra[$i]);
+    }
     echo buildInput($parms);
     echo '</div>';
     $i++;
