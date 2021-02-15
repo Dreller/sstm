@@ -95,6 +95,10 @@ function sendOnDemandDelete(){
     $("#confirmDelete").modal('show');
 }
 
+function closeOnDemand(){
+    $("#modalOnDemand").modal('hide');
+}
+
 /**
  * Complete the deletion action from the On Demand Delete Button.
  */

@@ -55,7 +55,7 @@
 
     </form>
     <div class="actions">
-        <div class="ui black deny button">
+        <div class="ui black deny button" onclick="closeOnDemand();">
             Cancel
         </div>
         <div id="bt_odFormDelete" class="ui disabled negative button" onclick="sendOnDemandDelete();">
