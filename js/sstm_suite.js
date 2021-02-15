@@ -1,14 +1,40 @@
+/**
+ * When the document is loaded:
+ *      1) Update all lists.
+ */
+$(document).ready(function(){
+    updateAll();
+});
+
+/** 
+ * Update all lists at once.
+ */
 function updateAll(){
-    $("#appLoader").addClass("active");
-    $("#packLoader").addClass("active");
-    $("#envLoader").addClass("active");
-    $("#verLoader").addClass("active");
+    $(".loader").addClass("active");
     updateApps();
     updatePackages();
     updateVersions();
     updateEnvironments();
 }
 
+/**
+ * Update 'Packages' and 'Applications' lists at once.
+ */
+function updatePacksAndApps(){
+    updatePackages();
+    updateApps();
+}
+
+/**
+ * The following functions will update lists separately.  I will 
+ * keep them separated in case I want to add additional columns
+ * for specific lists, or allow special treatments.
+ */
+
+
+/**
+ * Update 'Applications' list.
+ */
 function updateApps(){
     $("#appLoader").addClass("active");
     $.get("php/sstm_engine.php?method=application-get", function(data){
@@ -26,6 +52,9 @@ function updateApps(){
     });
 }
 
+/**
+ * Update 'Versions' list
+ */
 function updateVersions(){
     $("#verLoader").addClass("active");
     $.get("php/sstm_engine.php?method=version-get", function(data){
@@ -42,6 +71,9 @@ function updateVersions(){
     });
 }
 
+/**
+ * Update 'Environments' list
+ */
 function updateEnvironments(){
     $("#envLoader").addClass("active");
     $.get("php/sstm_engine.php?method=environment-get", function(data){
@@ -58,6 +90,9 @@ function updateEnvironments(){
     });
 }
 
+/**
+ * Update 'Packages' list
+ */
 function updatePackages(){
     $("#packLoader").addClass("active");
     $.get("php/sstm_engine.php?method=package-get", function(data){
@@ -73,14 +108,3 @@ function updatePackages(){
         $("#packLoader").removeClass("active");
     });
 }
-
-function updatePacksAndApps(){
-    updatePackages();
-    updateApps();
-}
-
-$('.dropdown').dropdown();
-
-$(document).ready(function(){
-    updateAll();
-});
