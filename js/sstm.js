@@ -86,17 +86,27 @@ function onDemandForm(file, title, allowDelete){
     });
 }
 
+/**
+ * Open a modal to confirm Deletion of current item.
+ */
 function sendOnDemandDelete(){
     var desc = currentType + ' ' + $('#' + currentPrefix + 'Name').val();
     $("#deleteItemName").html(desc);
     $("#confirmDelete").modal('show');
 }
+
+/**
+ * Complete the deletion action from the On Demand Delete Button.
+ */
 function deletionOK(){
     var temp = new Object;
     temp['method'] = currentType + '-del';
     sendForm(JSON.stringify(temp));
 }
 
+/**
+ * Send On Demand Form to SSTM Engine.
+ */
 function sendOnDemand(){
     setForm("odForm");
     setBtnLoad(true);
@@ -106,9 +116,18 @@ function sendOnDemand(){
     }
     sendForm(wrapForm());
 }
+
+/**
+ * Open a modal.
+ * @param {String} name 
+ */
 function displayModal(name){
     $("#modal" + name).modal('show');
 }
+
+/**
+ * Open the form to add a new Suite.
+ */
 function newSuite(){
     setForm("newSuite");
     setBtnLoad(true);
@@ -119,6 +138,10 @@ function newSuite(){
     sendForm(wrapForm());
 }
 
+/**
+ * Set the name of target form to 'currentForm'.
+ * @param {String} formID 
+ */
 function setForm(formID){
     currentForm = formID;
 }
