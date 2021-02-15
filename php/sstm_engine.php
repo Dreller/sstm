@@ -157,6 +157,8 @@ if( $action == 'upd' || $action == 'chg' ){
     if( $db->update($item, $input) ){
         $json['status']  = 'callback';
         $json['message'] = $callback;
+        $json['toast'] = $item." added";
+        $json['toastType'] = 'success';
     }else{
         $json['status']  = 'error';
         $json['message'] = $db->getLastError();
@@ -174,9 +176,12 @@ if( $action == 'del' || $action == 'rem' ){
     if( $db->delete($item) ){
         $json['status'] = 'callback';
         $json['message']= $callback;
+        $json['toast'] = $item . ' deleted';
     }else{
         $json['status'] = 'error';
         $json['message']= $db->getLastError();
+        $json['toast'] = $db->getLastError();
+        $json['toastType'] = 'error';
     }
     goto OutputJSON;
 }

@@ -231,6 +231,15 @@ function processResult(myData){
         var functionToCall = myData['message'];
         window[functionToCall]();
     }
+
+    // Toast
+    if( myData['toast'] != undefined ){
+        var tType = "";
+        if( myData['toastType'] != undefined ){
+            tType = myData['toastType'];
+        }
+        showToast(myData['toast'], tType);
+    }
 }
 
 /**
@@ -253,4 +262,40 @@ function setBtnLoad(activate){
     }else{
         $(btnID).removeClass("loading");
     }
-}    
+}
+
+/**
+ * Display a toast message
+ * Source: https://codeseven.github.io/toastr/demo.html
+ * 
+ * @param {*} message to display
+ * @param {*} type of message: info, warning, success, error
+ */
+function showToast(message, type = ""){
+
+    toastr.options = {
+        "closeButton":  false,
+        "debug":        false,
+        "progressBar":  true,
+        "positionClass":"toast-bottom-center",
+        "showDuration": 400
+    }
+
+    if( type == "success" ){
+        toastr.success(message);
+        return true;
+    }
+    if( type == "warning" ){
+        toastr.warning(message);
+        return true;
+    }
+    if( type == "error" ){
+        toastr.error(message);
+        return true;
+    }
+
+    toastr.info(message);
+    return true;
+
+}
+ 

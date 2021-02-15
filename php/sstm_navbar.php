@@ -47,6 +47,7 @@ foreach($suites as $suite){
         <div class="menu">
             <a class="item" href="#" onclick="loadScreen('sstm_list.php?el=suite');">Suites</a>
             <a class="item" href="#" onclick="loadScreen('sstm_list.php?el=user');">Users</a>
+            <a class="item" href="#" onclick="showToast('hello world!', 'error');">Test toastr</a>
             <a class="item" href="#">Parameters</a>
         </div>
     </div>
