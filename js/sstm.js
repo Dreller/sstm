@@ -72,7 +72,7 @@ function EditPackage(id){
  * Open the On Demand Form.
  * @param {String} file from /php dir to use as form.
  * @param {String} title of the modal.
- * @param {boolean} allowDelete true/false if the 'Delete' button should be enabled.
+ * @param {Boolean} allowDelete true/false if the 'Delete' button should be enabled.
  */
 function onDemandForm(file, title, allowDelete){
     $("#onDemandTitle").html(title);
