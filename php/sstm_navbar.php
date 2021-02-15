@@ -34,10 +34,10 @@ foreach($suites as $suite){
         Add <i class="dropdown icon"></i>
         <div class="menu">
             <a class="item" href="#" onclick="NewTest();">Test</a>
-            <a class="item" href="#" onclick="NewVersion();">Version</a>
-            <a class="item" href="#" onclick="NewApplication();">Application</a>
-            <a class="item" href="#" onclick="NewPackage();">Package</a>
-            <a class="item" href="#" onclick="NewEnvironment();">Environment</a>
+            <a class="item" href="#" onclick="newItem('version');">Version</a>
+            <a class="item" href="#" onclick="newItem('application');">Application</a>
+            <a class="item" href="#" onclick="newItem('package');">Package</a>
+            <a class="item" href="#" onclick="newItem('environment');">Environment</a>
         </div>
     </div>
 
