@@ -23,6 +23,14 @@ function buildInput($in){
     return call_user_func($f, $in);
 }
 
+function buildLongtext($in){
+    $name = extr('name', $in);
+    $value = extr('value', $in);
+    
+    $wip = "<textarea id='$name' name='$name' rows='3'>$value</textarea>";
+    return $wip;
+}
+
 function buildText($in){
     $type = extr('type', $in, 'text');
     $name = extr('name', $in);

@@ -29,34 +29,31 @@ if( !in_array($thisType, $okTypes, TRUE) ){
 $sqlPrefix  = '';
 $sqlTable   = $thisType;
 
-$inputNames = Array('Name');
-$inputTypes = Array('text');
+$inputNames = Array('Code', 'Name', 'Desc');
+$inputTypes = Array('text', 'text', 'longtext');
+$inputLabels= Array('Code', 'Name', 'Description');
+
+$inputSize =  Array();
+$inputSize['Code'] = 'four';
+
 $inputExtra = Array();
 
     switch($thisType){
         case 'version':
             $sqlPrefix  = 'ver';
-            $inputLabels = Array('Version Name');
             break;
         case 'environment':
             $sqlPrefix = 'env';
-            $inputLabels = Array('Environment Name');
             break;
         case 'package':
             $sqlPrefix = 'pack';
-            $inputLabels = Array('Package Name');
             break;
         case 'application':
             $sqlPrefix = 'app';
-            $inputNames  = Array('Name', 'Package');
-            $inputTypes  = Array('text', 'select');
-            $inputLabels = Array('Application Name', 'Package');
-            $inputExtra  = Array(
-                Array(),
-                Array(
-                    "table" => "package"
-                )
-            );
+            array_push($inputNames, 'Package');
+            array_push($inputTypes, 'select');
+            array_push($inputLabels,'Package');
+            $inputExtra['Package'] = Array('table'=>'package');
             break;
     }
 
@@ -105,7 +102,13 @@ foreach($inputNames as $inputName ){
     if( $editMode ){
         $value = $data[$fieldName];
     }
-    echo '<div class="field">';
+
+    $classSize = '';
+    if( isset($inputSize[$inputName]) ){
+        $classSize = $inputSize[$inputName]." wide ";
+    }
+
+    echo '<div class="'.$classSize.'field">';
     echo '<label>'.$inputLabels[$i].'</label>';
 
     $parms = Array(
@@ -114,8 +117,8 @@ foreach($inputNames as $inputName ){
         'value' => $value
     );
     # Merge Extra if set
-    if( isset($inputExtra[$i]) ){
-        $parms = array_merge($parms, $inputExtra[$i]);
+    if( isset($inputExtra[$inputName]) ){
+        $parms = array_merge($parms, $inputExtra[$inputName]);
     }
     echo buildInput($parms);
     echo '</div>';

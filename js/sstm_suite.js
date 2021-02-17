@@ -43,9 +43,9 @@ function updateApps(){
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditApplication(?);"></i>';
         for(var m in msg){
             // Add line
-            var packName= msg[m]['packName'];
+            var packCode= msg[m]['packCode'];
             var appName = msg[m]['appName'];
-            var newLine = "<tr><td>" + packName + ' / ' + appName + editIcon.replace('?', msg[m]['appID']) + "</td></tr>";
+            var newLine = "<tr><td>" + packCode + ' / ' + appName + editIcon.replace('?', msg[m]['appID']) + "</td></tr>";
             $("#appTableBody").append(newLine);
         }
         $("#appLoader").removeClass("active");
@@ -101,8 +101,9 @@ function updatePackages(){
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditPackage(?);"></i>';
         for(var m in msg){
             // Add line
+            var packCode = msg[m]['packCode'];
             var packName = msg[m]['packName'];
-            var newLine = "<tr><td>" + packName + editIcon.replace('?', msg[m]['packID']) + "</td></tr>";
+            var newLine = "<tr><td>" + packCode + ' - ' + packName + editIcon.replace('?', msg[m]['packID']) + "</td></tr>";
             $("#packTableBody").append(newLine);
         }
         $("#packLoader").removeClass("active");
