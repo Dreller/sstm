@@ -33,7 +33,10 @@ foreach($suites as $suite){
     <div id="navBarAdd" class="ui simple dropdown item disabled">
         Add <i class="dropdown icon"></i>
         <div class="menu">
-            <a class="item" href="#" onclick="NewTest();">Test</a>
+
+            <a class="item sstmNBApp" style="display: none;" href="#" onclick="newItem('test');">Test</a>
+            <a class="item sstmNBApp" style="display: none;" href="#" onclick="newItem('function');">Function</a>
+            <div class="divider sstmNBApp" style="display: none;"></div>
             <a class="item" href="#" onclick="newItem('version');">Version</a>
             <a class="item" href="#" onclick="newItem('application');">Application</a>
             <a class="item" href="#" onclick="newItem('package');">Package</a>

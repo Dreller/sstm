@@ -29,13 +29,26 @@ if( !isset($method) ){
 
 # Validate the method.  A method should be composed with 2 items:
 # item-action.  Examples:  suite-set, application-get, version-upd.
+$special = FALSE;
+if( strpos($method, '-') != FALSE ){
+    $x = explode('-', $method);
+    $item   = $x[0];
+    $action = $x[1];
+}else{
+    switch($method){
+        case 'appfct':
+            $special = TRUE;
+            break;
+    }
+}
 
-$x = explode('-', $method);
-$item   = $x[0];
-$action = $x[1];
+# If it's a special treatment, jump to it.
+if( $special ){
+    goto Specials;
+}
 
 # Validate item
-$okItems = Array('suite', 'package', 'application', 'version', 'environment');
+$okItems = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test');
 if( !in_array($item, $okItems, TRUE) ){
     $json['message'] = "(SSTM) Method not valid: item '$item' it not allowed.";
     goto OutputJSON;
@@ -75,7 +88,17 @@ $callback  = '';
             $sqlSort   = 'packName';
             $callback  = 'updateApps';
             break;
+        case 'function':
+            $sqlPrefix = 'fct';
+            $callback  = 'updateContent';
+            break;
+        case 'test':
+            $sqlPrefix = 'test';
+            $callback = 'updateContent';
+            break;
     }
+
+
 
 #====================================================================
 # Action: SET
@@ -124,6 +147,11 @@ if( $action == 'new' || $action == 'add' ){
     # Set Suite ID
     $new[$sqlPrefix."Suite"]    = $_SESSION['current-suite'];
     
+        # For functions and tests, add Application ID
+        if( $item == 'function' || $item == 'test' ){
+            $new[$sqlPrefix."Application"]    = $_SESSION['current-app'];
+        }
+
     $newID = $db->insert($item, $new);
     if( $newID ){
         $json['id']     = $newID;
@@ -194,7 +222,34 @@ $json['message'] = "(SSTM) Don't know what to do.  Item $item, Action $action.";
 goto OutputJSON;
 
 
+# ===================================================================
+# ============== S P E C I A L    T R E A T M E N T S ===============
+# ===================================================================
+Specials:
+if( $method == 'appfct' ){
+    # Request for a list of an app functions and tests 
+    $db->where('fctApplication', $_SESSION['current-app']);
+    $db->join('test', 'testFunction = fctID', 'LEFT');
+    $db->orderBy('fctName', 'asc');
+    $db->orderBy('testNumber', 'asc');
+    $db->orderBy('testName', 'asc');
 
+    $items = $db->get('function');
+
+    $json['status']     = 'ok';
+    $json['count']      = count($items);
+    $json['message']    = json_encode($items);
+    goto OutputJSON;
+}
+
+#====================================================================
+# Special: ?
+# . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+$json['message'] = "(SSTM) Don't know what to do, special treatment.  Item $item, Action $action.";
+goto OutputJSON;
+
+
+# Return the JSON
 OutputJSON:
     header('Content-Type: application/json');
     $json['debug']      = "> ".$db->getLastQuery();

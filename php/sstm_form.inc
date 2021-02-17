@@ -59,6 +59,10 @@ function buildSelect($in){
         case 'application':
             $sqlPrefix = 'app';
             break;
+        case 'function':
+            $sqlPrefix = 'fct';
+            $db->where('fctApplication', $_SESSION['current-app']);
+            break;
     }
 
     $cols = Array($sqlPrefix.'ID', $sqlPrefix.'Name');

@@ -19,7 +19,7 @@ if( !isset($_GET['type']) ){
 
 # Check if 'type' is valid
 $thisType = strtolower($_GET['type']);
-$okTypes = Array('suite', 'package', 'application', 'version', 'environment');
+$okTypes = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test');
 if( !in_array($thisType, $okTypes, TRUE) ){
     echo "ERROR: Type '$thisType' is not valid.";
     die();
@@ -54,6 +54,21 @@ $inputExtra = Array();
             array_push($inputTypes, 'select');
             array_push($inputLabels,'Package');
             $inputExtra['Package'] = Array('table'=>'package');
+            break;
+        case 'function':
+            $sqlPrefix = 'fct';
+            $inputNames = Array('Name');
+            $inputTypes = Array('text');
+            $inputLabels= Array('Function Name');
+            $db->where('fctApplication', $_SESSION['current-app']);
+            break;
+        case 'test':
+            $sqlPrefix = 'test';
+            $inputNames = Array('Function', 'Number', 'Name', 'Desc', 'Method', 'Result');
+            $inputTypes = Array('select', 'text', 'text', 'longtext', 'longtext', 'longtext');
+            $inputLabels= Array('Function', 'Number', 'Name', 'Short Description', 'How to test (method)', 'Expected result');
+            $inputSize['Number'] = 'four';
+            $inputExtra['Function'] = Array('table'=>'function');
             break;
     }
 

@@ -1,10 +1,19 @@
 /**
  * When the document is loaded:
  *      1) Update all lists.
+ *      2) Update the dropdown 'Add' menu
  */
 $(document).ready(function(){
     updateAll();
+    updateMenu();
 });
+
+/**
+ * Update dropdown menu to hide 'Function' and 'Test'
+ */
+function updateMenu(){
+    $(".sstmNBApp").hide();
+}
 
 /** 
  * Update all lists at once.
