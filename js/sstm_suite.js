@@ -45,7 +45,7 @@ function updateApps(){
             // Add line
             var packCode= msg[m]['packCode'];
             var appName = msg[m]['appName'];
-            var newLine = "<tr><td>" + packCode + ' / ' + appName + editIcon.replace('?', msg[m]['appID']) + "</td></tr>";
+            var newLine = "<tr><td><span style='cursor:pointer;' onclick='loadScreen(\"sstm_app.php?id=" + msg[m]['appID'] + "\");'>" + packCode + ' / ' + appName + '</span>' + editIcon.replace('?', msg[m]['appID']) + "</td></tr>";
             $("#appTableBody").append(newLine);
         }
         $("#appLoader").removeClass("active");
