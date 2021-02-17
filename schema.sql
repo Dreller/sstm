@@ -15,14 +15,18 @@ CREATE TABLE IF NOT EXISTS `application` (
   `appSuite` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: suite',
   `appPackage` bigint(20) NOT NULL COMMENT 'Key to: package',
   `appName` varchar(255) NOT NULL COMMENT 'Display Name',
+  `appCode` varchar(50) DEFAULT NULL COMMENT 'Short custom ID.',
+  `appDesc` text COMMENT 'Description',
   PRIMARY KEY (`appID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Applications contained in each suite.';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Applications contained in each suite.';
 
 CREATE TABLE IF NOT EXISTS `environment` (
   `envID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
   `envSuite` bigint(20) DEFAULT NULL COMMENT 'Key to: suite',
   `envName` varchar(50) DEFAULT NULL COMMENT 'Display name.',
   `envOrder` tinyint(4) DEFAULT '0' COMMENT 'Key to sort environments in logical order.',
+  `envCode` varchar(50) DEFAULT NULL COMMENT 'Short custom ID.',
+  `encDesc` text COMMENT 'Description.',
   PRIMARY KEY (`envID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Environments for each suites.';
 
@@ -46,10 +50,12 @@ CREATE TABLE IF NOT EXISTS `meta` (
 
 CREATE TABLE IF NOT EXISTS `package` (
   `packID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
-  `packSystem` bigint(20) DEFAULT NULL COMMENT 'Key to: system',
+  `packSuite` bigint(20) DEFAULT NULL COMMENT 'Key to: suite',
   `packName` varchar(255) DEFAULT NULL COMMENT 'Display name.',
+  `packCode` varchar(50) DEFAULT NULL COMMENT 'Short custom ID.',
+  `packDesc` text COMMENT 'Description.',
   PRIMARY KEY (`packID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Packages are groups of applications within a suite.';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Packages are groups of applications within a suite.';
 
 CREATE TABLE IF NOT EXISTS `phase` (
   `phaID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
@@ -65,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `suite` (
   `suiteID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID',
   `suiteAccount` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Key to: account',
   `suiteName` varchar(255) NOT NULL COMMENT 'Display name.',
+  `suiteDesc` text COMMENT 'Description.',
   PRIMARY KEY (`suiteID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Suites of applications.';
 
@@ -93,8 +100,10 @@ CREATE TABLE IF NOT EXISTS `version` (
   `verID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID.',
   `verSuite` bigint(20) NOT NULL COMMENT 'Key to: suite',
   `verName` varchar(50) NOT NULL COMMENT 'Display name for version.',
+  `verCode` varchar(50) DEFAULT NULL COMMENT 'Short custom ID.',
+  `verDesc` text COMMENT 'Description.',
   PRIMARY KEY (`verID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Versions of suites for which a phase of tests will be performed.';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COMMENT='Versions of suites for which a phase of tests will be performed.';
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
