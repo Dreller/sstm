@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `environment` (
   `envName` varchar(50) DEFAULT NULL COMMENT 'Display name.',
   `envOrder` tinyint(4) DEFAULT '0' COMMENT 'Key to sort environments in logical order.',
   `envCode` varchar(50) DEFAULT NULL COMMENT 'Short custom ID.',
-  `encDesc` text COMMENT 'Description.',
+  `envDesc` text COMMENT 'Description.',
   PRIMARY KEY (`envID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Environments for each suites.';
 
