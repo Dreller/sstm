@@ -17,6 +17,18 @@ var currentPrefix = '';
  */
 $('.ui.dropdown').dropdown();
 
+/**
+ * Initialize TinyMCE
+ */
+function initializeRTE(){
+    tinymce.init({
+        selector:'.sstm_rte',
+        toolbar_mode: 'sliding',
+        statusbar:false,
+        menubar: false,
+        toolbar: "fontselect fontsizeselect backcolor forecolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | indent outdent subscript superscript | table"
+    });
+}
 
 /**
  * Load a /php script in the mainBox container.
@@ -83,6 +95,7 @@ function onDemandForm(file, title, allowDelete){
     }
     $("#odForm").load('php/sstm_form_' + file, function(){
         $("#modalOnDemand").modal('show');
+        initializeRTE();
     });
 }
 
@@ -96,6 +109,9 @@ function sendOnDemandDelete(){
 }
 
 function closeOnDemand(){
+    $( ".sstm_rte" ).each(function() {
+        tinymce.get($(this).attr("id")).destroy();
+    });
     $("#modalOnDemand").modal('hide');
 }
 
@@ -159,6 +175,14 @@ function wrapForm(){
     var sorted_array = {};
     $.map(mixed_array, function(n, i){
         sorted_array[n['name']] = n['value'];
+    });
+    // Update Array with RTF from RTE
+    $( ".sstm_rte" ).each(function() {
+        console.log("TinyMCE ID " + $(this).attr("id"));
+        var thisRealID = $(this).attr("id");
+        var thisRealContent = tinymce.get(thisRealID).getContent();
+        sorted_array[thisRealID] = thisRealContent;
+        tinymce.get(thisRealID).destroy();
     });
     var jsonWorker = JSON.stringify(sorted_array);
     return jsonWorker;

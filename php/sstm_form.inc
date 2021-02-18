@@ -27,7 +27,7 @@ function buildLongtext($in){
     $name = extr('name', $in);
     $value = extr('value', $in);
     
-    $wip = "<textarea id='$name' name='$name' rows='3'>$value</textarea>";
+    $wip = "<textarea class='sstm_rte' id='$name' name='$name' rows='3'>$value</textarea>";
     return $wip;
 }
 
