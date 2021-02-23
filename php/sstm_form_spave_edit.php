@@ -75,9 +75,9 @@ $inputExtra = Array();
             break;
         case 'phase':
             $sqlPrefix = 'pha';
-            $inputNames = Array('Version', 'Environment', 'Name', 'Desc');
-            $inputTypes = Array('select', 'select', 'text', 'longtext');
-            $inputLabels= Array('Version to test', 'Environment to test', 'Test Phase Name', 'Description');
+            $inputNames = Array('Version', 'Environment', 'Name', 'Desc', 'Open');
+            $inputTypes = Array('select', 'select', 'text', 'longtext', 'yesno');
+            $inputLabels= Array('Version to test', 'Environment to test', 'Test Phase Name', 'Description', 'This phase is currently active');
             $inputExtra['Version'] = Array('table'=>'version');
             $inputExtra['Environment'] = Array('table'=>'environment');
             break;

@@ -39,6 +39,13 @@ function loadScreen(name){
 }
 
 /**
+ * Load Home Screen
+ */
+function goHome(){
+    loadScreen('sstm_home.php');
+}
+
+/**
  * Load a suite in the scren.
  * @param {Number} id of the suite to load.
  */
@@ -88,6 +95,11 @@ function EditFunction(id){
     currentType = 'function';
     currentPrefix = 'fct';
     onDemandForm('spave_edit.php?type=function&id=' + id, "Edit Function", true);
+}
+function EditPhase(id){
+    currentType = 'phase';
+    currentPrefix = 'pha';
+    onDemandForm('spave_edit.php?type=phase&id=' + id, "Edit Phase", true);
 }
 
 /**

@@ -20,7 +20,7 @@ foreach($suites as $suite){
         <img class="logo" src="php/sstm_thumbLetter.php">&nbsp;
         Account Name
     </a>
-    <a href="#" class="item">Home</a>
+    <a href="#" class="item" onclick="goHome();">Home</a>
     <div class="ui simple dropdown item">
         Suites <i class="dropdown icon"></i>
         <div class="menu">

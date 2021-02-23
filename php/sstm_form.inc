@@ -40,6 +40,17 @@ function buildText($in){
     return $wip;
 }
 
+function buildYesno($in){
+    $name = extr('name', $in);
+    $value = extr('value', $in);
+
+    $wip = "<select id='$name' name='$name' class='ui dropdown'>";
+    $wip.= "<option value='0' ".($value==0?' selected':'').">No</option>";
+    $wip.= "<option value='1' ".($value==1?' selected':'').">Yes</option>";
+    $wip.= "</select>";
+    return $wip;
+}
+
 function buildSelect($in){
     global $db;
     $table = extr('table', $in);

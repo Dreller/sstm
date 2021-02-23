@@ -37,6 +37,8 @@ if( strpos($method, '-') != FALSE ){
 }else{
     switch($method){
         case 'appfct':
+        case 'homeCards':
+        case 'updateMeta':
             $special = TRUE;
             break;
     }
@@ -99,6 +101,7 @@ $callback  = '';
         case 'phase':
             $sqlPrefix = 'pha';
             $callback = 'updatePhases';
+            $sqlSort   = $sqlPrefix.'Name';
             break;
     }
 
@@ -240,10 +243,83 @@ if( $method == 'appfct' ){
 
     $items = $db->get('function');
 
+    
+}
+
+if( $method == 'homeCards' ){
+    # Request active phases and stats
+    $db->where('phaOpen', 1);
+    $db->join('suite', 'phaSuite = suiteID', 'LEFT');
+    $db->where('suiteAccount', $_SESSION['userAccount']);
+    $db->orderBy('suiteName', 'asc');
+
+    $items = $db->get('phase');
+
     $json['status']     = 'ok';
     $json['count']      = count($items);
     $json['message']    = json_encode($items);
     goto OutputJSON;
+}
+
+if( $method == 'updateMeta' ){
+    $db->join('suite', 'suiteID = phaSuite', 'LEFT');
+    $db->join('application', 'appSuite = suiteID', 'LEFT');
+    $db->where('phaOpen', 1);
+
+    $items = $db->get('phase');
+
+    
+    foreach($items as $item){
+        $app = $item['appID'];
+
+        # TODO
+        $db->join('test', 'testID = resTest', 'LEFT');
+        $db->where('resOpen', 1);
+        $db->where('testApplication', $app);
+        $db->get('result');
+        $openCount = $db->count;
+
+        $db->where('metaKey', 'STAT_TEST_TODO');
+        $db->where('metaParentLevel', 'APP');
+        $db->where('metaParentID', $app);
+        $db->delete('meta');
+
+        $new = Array(
+            "metaKey" => "STAT_TEST_TODO",
+            "metaParentLevel" => "APP",
+            "metaParentID" => $app,
+            "metaStatNumeric" => $openCount,
+            "metaDataDisplay" => "To do"
+        );
+        $db->insert('meta', $new);
+
+
+        # DONE
+        $db->join('test', 'testID = resTest', 'LEFT');
+        $db->where('resOpen', 0);
+        $db->where('testApplication', $app);
+        $db->get('result');
+        $closedCount = $db->count;
+
+        $db->where('metaKey', 'STAT_TEST_DONE');
+        $db->where('metaParentLevel', 'APP');
+        $db->where('metaParentID', $app);
+        $db->delete('meta');
+
+        $new = Array(
+            "metaKey" => "STAT_TEST_DONE",
+            "metaParentLevel" => "APP",
+            "metaParentID" => $app,
+            "metaStatNumeric" => $openCount,
+            "metaDataDisplay" => "Done"
+        );
+        $db->insert('meta', $new);
+    }
+
+
+    $json['status']     = 'ok';
+    goto OutputJSON;
+
 }
 
 #====================================================================

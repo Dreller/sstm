@@ -92,7 +92,7 @@ function updatePhases(){
         var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditPhase(?);"></i>';
         for(var m in msg){
             // Add line
-            var verName = msg[m]['phaName'];
+            var phaName = msg[m]['phaName'];
             var newLine = "<tr><td>" + phaName + editIcon.replace('?', msg[m]['phaID']) + "</td></tr>";
             $("#phaTableBody").append(newLine);
         }
