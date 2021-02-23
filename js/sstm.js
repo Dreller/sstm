@@ -79,6 +79,16 @@ function EditPackage(id){
     currentPrefix = 'pack';
     onDemandForm('spave_edit.php?type=package&id=' + id, "Edit Package", true);
 }
+function EditTest(id){
+    currentType = 'test';
+    currentPrefix = 'test';
+    onDemandForm('spave_edit.php?type=test&id=' + id, "Edit Test", true);
+}
+function EditFunction(id){
+    currentType = 'function';
+    currentPrefix = 'fct';
+    onDemandForm('spave_edit.php?type=function&id=' + id, "Edit Function", true);
+}
 
 /**
  * Open the On Demand Form.

@@ -12,7 +12,7 @@ $app = $db->getOne('application');
 <p>&nbsp;<br>&nbsp;<br>&nbsp;<br></p>
 
 <div id="appIntro" class="ui segment">
-    <h2 class="ui dividing header"><?php echo $app['appName']; ?></h2>
+    <h2 class="ui dividing header"><strong><?php echo $app['appName']; ?></strong> Test Plan</h2>
     <p><?php echo $app['appDesc']; ?>
 </div>
 <div id="contentLoader" class="ui loader"></div>

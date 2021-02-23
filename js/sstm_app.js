@@ -39,12 +39,13 @@ function updateContent(){
 
             // Add Title
             if( fctName != prevFct ){
-                myContent += "<h2 class='ui dividing header' data-testID='" + fctID + "'>" + fctName + "</h2>";
+                myContent += "<h2 class='ui dividing header' data-fctID='" + fctID + "' style='cursor:pointer;' onclick='EditFunction(" + fctID + ");'>" + fctName + "</h2>";
                 myContent += "<div class='ui celled list'>";
             }
 
             // Add Test
-                myContent += "<div class='item'><div class='content'><div class='header'>" + testNo + " - " + testName + "</div>";
+
+                myContent += "<div class='item'><div class='content'><div class='header' style='cursor:pointer;' onclick='EditTest(" + testID + ");'>" + testNo + " - " + testName + "</div>";
                 myContent += testDesc + "</div></div></div>";
 
             // Store Function Name
