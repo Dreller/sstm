@@ -96,6 +96,10 @@ $callback  = '';
             $sqlPrefix = 'test';
             $callback = 'updateContent';
             break;
+        case 'phase':
+            $sqlPrefix = 'pha';
+            $callback = 'updatePhases';
+            break;
     }
 
 

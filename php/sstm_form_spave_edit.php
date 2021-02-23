@@ -6,6 +6,9 @@
  *                      application
  *                      version
  *                      environment
+ *                      function
+ *                      test
+ *                      phase
  *              id    = ID of item to enter in EDIT mode.
  */
 session_start();
@@ -19,7 +22,7 @@ if( !isset($_GET['type']) ){
 
 # Check if 'type' is valid
 $thisType = strtolower($_GET['type']);
-$okTypes = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test');
+$okTypes = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test', 'phase');
 if( !in_array($thisType, $okTypes, TRUE) ){
     echo "ERROR: Type '$thisType' is not valid.";
     die();
@@ -69,6 +72,14 @@ $inputExtra = Array();
             $inputLabels= Array('Function', 'Number', 'Name', 'Short Description', 'How to test (method)', 'Expected result');
             $inputSize['Number'] = 'four';
             $inputExtra['Function'] = Array('table'=>'function');
+            break;
+        case 'phase':
+            $sqlPrefix = 'pha';
+            $inputNames = Array('Version', 'Environment', 'Name', 'Desc');
+            $inputTypes = Array('select', 'select', 'text', 'longtext');
+            $inputLabels= Array('Version to test', 'Environment to test', 'Test Phase Name', 'Description');
+            $inputExtra['Version'] = Array('table'=>'version');
+            $inputExtra['Environment'] = Array('table'=>'environment');
             break;
     }
 

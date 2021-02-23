@@ -24,6 +24,7 @@ function updateAll(){
     updatePackages();
     updateVersions();
     updateEnvironments();
+    updatePhases();
 }
 
 /**
@@ -78,6 +79,25 @@ function updateVersions(){
         }
         $("#verLoader").removeClass("active");
     });
+}
+
+/**
+ * Update 'Test Phases' list
+ */
+function updatePhases(){
+    $("#phaLoader").addClass("active");
+    $.get("php/sstm_engine.php?method=phase-get", function(data){
+        $("#phaTableBody tr").remove();
+        var msg = JSON.parse(data['message']);
+        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditPhase(?);"></i>';
+        for(var m in msg){
+            // Add line
+            var verName = msg[m]['phaName'];
+            var newLine = "<tr><td>" + phaName + editIcon.replace('?', msg[m]['phaID']) + "</td></tr>";
+            $("#phaTableBody").append(newLine);
+        }
+    });
+    $("#phaLoader").removeClass("active");
 }
 
 /**

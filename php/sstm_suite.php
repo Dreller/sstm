@@ -65,6 +65,16 @@ $suite = $db->getOne('suite');
                 </tbody>
             </table> 
         </div>
+        <div id="phases" class="ui segment">
+            <h2 class="ui dividing header">Phases</h2>
+            <div id="phaLoader" class="ui loader"></div>
+            <table id="phaTable" class="ui celled table">
+                <thead id="phaTableHead">
+                </thead>
+                <tbody id="phaTableBody">
+                </tbody>
+            </table> 
+        </div>
     </div>
 </div>
 

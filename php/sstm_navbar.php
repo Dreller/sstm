@@ -41,6 +41,8 @@ foreach($suites as $suite){
             <a class="item" href="#" onclick="newItem('application');">Application</a>
             <a class="item" href="#" onclick="newItem('package');">Package</a>
             <a class="item" href="#" onclick="newItem('environment');">Environment</a>
+            <div class="divider"></div>
+            <a class="item" href="#" onclick="newItem('phase');">Test Phase</a>
         </div>
     </div>
 
