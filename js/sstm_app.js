@@ -23,9 +23,9 @@ function updateContent(){
     $.get("php/sstm_engine.php?method=appfct", function(data){
         $("#appContent *").remove();
         var msg = JSON.parse(data['message']);
-        var editIcon = '<i style="float:right;cursor: pointer;" class="edit icon" onclick="EditApplication(?);"></i>';
         var myContent = '';
         var prevFct = '';
+        var flagFirst = true;
 
         for(var m in msg){
             // Variables
@@ -36,18 +36,26 @@ function updateContent(){
             var testNo = msg[m]['testNumber'];
             var testName=msg[m]['testName'];
             var testDesc=msg[m]['testDesc'];
-
+            
             // Add Title
             if( fctName != prevFct ){
-                myContent += "<h2 class='ui dividing header' data-fctID='" + fctID + "' style='cursor:pointer;' onclick='EditFunction(" + fctID + ");'>" + fctName + "</h2>";
+                // Close any previous opened list, if not first
+                    if( flagFirst === false ){
+                        myContent += "</div>";
+                    }
+                myContent += "<h2 class='ui header' data-fctID='" + fctID + "' style='cursor:pointer;' onclick='EditFunction(" + fctID + ");'>" + fctName + "</h2>";
                 myContent += "<div class='ui celled list'>";
+                flagFirst = false;
             }
 
-            // Add Test
-
+            // Add Test if not null
+            if( testID != null ){
                 myContent += "<div class='item'><div class='content'><div class='header' style='cursor:pointer;' onclick='EditTest(" + testID + ");'>" + testNo + " - " + testName + "</div>";
                 myContent += testDesc + "</div></div></div>";
-
+            }else{
+                myContent += "<div class='item'><div class='content'>(No test added yet)</div></div>";
+            }
+                
             // Store Function Name
             prevFct = fctName;
         }
