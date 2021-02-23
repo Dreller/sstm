@@ -48,7 +48,7 @@ if( $special ){
 }
 
 # Validate item
-$okItems = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test');
+$okItems = Array('suite', 'package', 'application', 'version', 'environment', 'function', 'test', 'phase');
 if( !in_array($item, $okItems, TRUE) ){
     $json['message'] = "(SSTM) Method not valid: item '$item' it not allowed.";
     goto OutputJSON;
